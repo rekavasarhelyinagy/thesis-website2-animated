@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+    
+</head>
+
+<body onload="loadCartItems()">
+    
+    <div id="header"></div>
+      
+    <main class="margin-top">
+      <h2 class="h2 section-title">Cart</h2>
+      <div class="cart-container">
+            <!-- Cart Items Section -->
+            <div class="cart-items-section">
+              <div id="cart-items">
+                <!-- Each cart item will dynamically appear here -->
+                <div class="cart-item">
+                    <img class="item-image" src="image-path.jpg" alt="Product Image">
+                    <span class="item-name">Product Name</span>
+                    <button class="delete-btn">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                    <span class="item-price">$99</span>
+                </div>
+            </div>
+            
+            </div>
+    
+            <!-- Cart Summary Section -->
+            <div class="cart-summary">
+                <h3 id="total-price">Total: $0</h3>
+                <a href="load2/load2.html?redirect=/paid.html">
+                  <button class="btn btn-primary">Buy</button>
+                </a>
+                
+                <button class="btn btn-secondary" onclick="clearCart()">Clear Cart</button>
+            </div>
+        </div>
+
+        
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="script.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+
+    <script>
+          let total = 123.45678;
+          document.getElementById("total-price").textContent = `Total: $${total.toFixed(2)}`;
+    </script>
+
+    <!-- Attach Header and Footer -->
+    <script>
+      // Load header first
+      fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('header').innerHTML = data;
+
+          // NOW you can safely run cart logic
+          initializeCart(); 
+        });
+
+      // Load footer (not related to cart logic)
+      fetch('footer.html')
+        .then(res => res.text())
+        .then(data => {
+          document.getElementById('footer').innerHTML = data;
+        });
+
+      // Define your cart logic
+      function initializeCart() {
+        const cartButton = document.getElementById('cart-count');
+        
+        // Fake example: set initial count
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cartButton.textContent = cart.length;
+
+        // Listen for adding items elsewhere on your site
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+          button.addEventListener('click', () => {
+            cart.push('newItem'); // Replace with actual item logic
+            localStorage.setItem('cart', JSON.stringify(cart));
+            cartButton.textContent = cart.length;
+          });
+        });
+      }
+    </script>
+
+    <script>
+      function proceedToCheckout() {
+        // First redirect to the game page
+        window.location.href = "game/bubbles.html";
+
+        // After 3 seconds, redirect to create-account page
+        setTimeout(() => {
+          window.location.href = "create-account.html";
+        }, 3000);
+      }
+    </script>
+
+
+</body>
+</html>

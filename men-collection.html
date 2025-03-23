@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Men Collection</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div id="header"></div>
+
+  <main>
+    <section class="section product">
+      <div class="container">
+        <h2 class="h2 section-title">Men Collection</h2>
+
+        <!-- PRODUCT LIST DYNAMICALLY LOADED HERE -->
+        <ul class="product-list" id="product-list"></ul>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <div id="footer"></div>
+
+  <!-- GO TO TOP BUTTON -->
+  <a href="#top" class="go-top-btn" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- DYNAMIC HEADER + FOOTER LOADING -->
+  <script>
+    // Load header
+    fetch('header.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('header').innerHTML = data;
+        initializeCart();
+      });
+
+    // Load footer
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('footer').innerHTML = data;
+      });
+
+    // Initialize cart
+    function initializeCart() {
+      const cartButton = document.getElementById('cart-count');
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cartButton.textContent = cart.length;
+
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', () => {
+          cart.push('newItem');
+          localStorage.setItem('cart', JSON.stringify(cart));
+          cartButton.textContent = cart.length;
+        });
+      });
+    }
+
+    // LOAD PRODUCTS FROM JSON
+    fetch('men-products.json')
+      .then(res => res.json())
+      .then(products => {
+        const list = document.getElementById('product-list');
+        list.innerHTML = ''; // Clear placeholder
+
+        products.forEach(product => {
+          const categoryHTML = product.category.map(cat => `<p class="card-cat-link">${cat}</p>`).join(' / ');
+          const badgeHTML = product.badge ? `<div class="card-badge">${product.badge}</div>` : '';
+          const oldPrice = product.oldPrice ? `<del>$${product.oldPrice}</del>` : '';
+
+          const html = `
+            <li class="product-item">
+              <div class="product-card" tabindex="0">
+                <figure class="card-banner">
+                  <a href="load2/load2.html?redirect=%2Fproduct-m.html%3Fid%3D${product.id}">
+                    <img src="${product.image}" width="312" height="350" loading="lazy" alt="${product.title}" class="image-contain">
+                  </a>
+                  ${badgeHTML}
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">
+                    <a href="load2/load2.html?redirect=%2Fproduct-m.html%3Fid%3D${product.id}">${product.title}</a>
+                  </h3>
+                  <data class="card-price" value="${product.price}">$${product.price} ${oldPrice}</data>
+                </div>
+              </div>
+            </li>
+          `;
+
+
+          list.insertAdjacentHTML('beforeend', html);
+        });
+      });
+  </script>
+
+</body>
+</html>
