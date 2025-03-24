@@ -6,16 +6,46 @@
     <title>Checkout</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>Checkout</h1>
-    <p>Thank you for your purchase!</p>
-    <button class="btn btn-primary" onclick="clearCart()">Return to Shop</button>
+
+    <div id="header"></div>
+
+    <main class="paid-main">
+        
+        <h1>Thank you for your purchase!</h1>
+        <button class="btn btn-primary" onclick="clearCart()">Return to Shop</button>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="script.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
     <script>
+
         function clearCart() {
             localStorage.removeItem("cart");
             window.location.href = "index.html";
         }
+
+        // Load header
+        fetch('header.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('header').innerHTML = data;
+            initializeCart();
+        });
+
+        // Load footer
+        fetch('footer.html')
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById('footer').innerHTML = data;
+        });
+
     </script>
+
 </body>
 </html>

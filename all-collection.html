@@ -14,7 +14,7 @@
   <main>
     <section class="section product">
       <div class="container">
-        <h2 class="h2 section-title">All Products</h2>
+        <h2 class="h2 section-title">Men Collection</h2>
 
         <!-- PRODUCT LIST DYNAMICALLY LOADED HERE -->
         <ul class="product-list" id="product-list"></ul>
@@ -81,23 +81,23 @@
           const oldPrice = product.oldPrice ? `<del>$${product.oldPrice}</del>` : '';
 
           const html = `
-          <li class="product-item">
-            <div class="product-card" tabindex="0">
-              <figure class="card-banner">
-                <a href="load2/load2.html?redirect=%2Fproduct-all.html%3Fid%3D${product.id}">
-                  <img src="${product.image}" width="312" height="350" loading="lazy" alt="${product.title}" class="image-contain">
-                </a>
-                ${badgeHTML}
-              </figure>
-              <div class="card-content">
-                <h3 class="h3 card-title">
-              <a href="load2/load2.html?redirect=%2Fproduct-all.html%3Fid%3D${product.id}"></a>
-                </h3>
-                <data class="card-price" value="${product.price}">$${product.price} ${oldPrice}</data>
+            <li class="product-item">
+              <div class="product-card" tabindex="0">
+                <figure class="card-banner">
+                  <a href="load2/load2.html?redirect=%2Fproduct-all.html%3Fid%3D${product.id}">
+                    <img src="${product.image}" width="312" height="350" loading="lazy" alt="${product.title}" class="image-contain">
+                  </a>
+                  ${badgeHTML}
+                </figure>
+                <div class="card-content">
+                  <h3 class="h3 card-title">
+                    <a href="load2/load2.html?redirect=%2Fproduct-all.html%3Fid%3D${product.id}">${product.title}</a>
+                  </h3>
+                  <data class="card-price" value="${product.price}">$${product.price} ${oldPrice}</data>
+                </div>
               </div>
-            </div>
-          </li>
-        `;
+            </li>
+          `;
 
 
           list.insertAdjacentHTML('beforeend', html);
